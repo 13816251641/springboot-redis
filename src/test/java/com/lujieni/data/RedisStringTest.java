@@ -1,4 +1,4 @@
-package com.lujieni;
+package com.lujieni.data;
 
 import org.junit.Before;
 import org.junit.Test;
