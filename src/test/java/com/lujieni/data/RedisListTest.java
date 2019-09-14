@@ -48,6 +48,9 @@ public class RedisListTest {
         }
     }
 
+    /**
+     * 从一个空间中截取数据
+     */
     @Test
     public void testTrim(){
         redisTemplate.delete("li2");
