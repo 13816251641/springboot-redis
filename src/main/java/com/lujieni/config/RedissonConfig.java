@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
-@Configuration
+/*
+    暂时不引入redisson
+    @Configuration
+*/
 public class RedissonConfig {
     @Bean
     public RedissonClient redisson() throws IOException {
