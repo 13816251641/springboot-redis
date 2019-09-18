@@ -1,3 +1,4 @@
+/*
 package com.lujieni.config;
 
 import org.redisson.Redisson;
@@ -8,10 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
+*/
 /*
     暂时不引入redisson
     @Configuration
-*/
+*//*
+
 public class RedissonConfig {
     @Bean
     public RedissonClient redisson() throws IOException {
@@ -21,3 +24,4 @@ public class RedissonConfig {
     }
 
 }
+*/

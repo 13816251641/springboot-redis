@@ -1,3 +1,4 @@
+/*
 package com.lujieni.redisson;
 
 import org.junit.Test;
@@ -32,3 +33,4 @@ public class RedissonTest {
 
 
 }
+*/

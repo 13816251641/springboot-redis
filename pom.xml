@@ -20,12 +20,13 @@
 
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.11.3</version>
-        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>3.11.3</version>
+            </dependency>
+        -->
 
         <!--spring2.0集成redis所需common-pool2-->
         <dependency>
