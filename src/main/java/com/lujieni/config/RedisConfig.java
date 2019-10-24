@@ -78,13 +78,15 @@ public class RedisConfig {
      * 使用@Primary来指定默认情况下即使用@Autowried标签
      * 来装配时使用哪一个bean
      *
-     * spring默认会按照参数名+类名去寻找符合条件的bean,
+     * spring默认会按照类名+参数名去寻找符合条件的bean,
      * 但当没有符合条件的bean的时候会按照类型去寻找
      *
      * redisTemplate 默认序列化使用的jdkSerializeable,
      * 存储二进制字节码, 所以自定义序列化类
      *
      * @param redisConnectionFactory
+     * 这里按照类型去找有2个符合条件又因为按照参数名称去找还是分不出,
+     * 所以RedisConnectionFactory要加@Primary
      * @return
      */
     @Bean("redisTemplate")
