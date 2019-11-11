@@ -34,9 +34,4 @@ public class RedisLockUtil {
         return redisTemplate.execute(drs, parameters, requestId);
     }
 
-
-
-
-
-
 }

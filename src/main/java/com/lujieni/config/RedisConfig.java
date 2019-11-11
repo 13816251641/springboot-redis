@@ -75,6 +75,7 @@ public class RedisConfig {
      * 自定义RedisTemplate类,不使用默认的RedisTemplate,
      * 注意这里方法名一定要是redisTemplate或者使用@Bean
      * 来指定("redisTemplate"),这样才会覆盖默认的配置;
+     *
      * 使用@Primary来指定默认情况下即使用@Autowried标签
      * 来装配时使用哪一个bean
      *
@@ -84,15 +85,16 @@ public class RedisConfig {
      * redisTemplate 默认序列化使用的jdkSerializeable,
      * 存储二进制字节码, 所以自定义序列化类
      *
-     * @param redisConnectionFactory
-     * 这里按照类型去找有2个符合条件又因为按照参数名称去找还是分不出,
-     * 所以RedisConnectionFactory要加@Primary
+     * 原本使用入参名来区别同一个类的不同实例是可行的,
+     * 但是在redisAutoConfiguration中还配置了stringRedisTemplate,
+     * 它没有按照入参名来区分,所以我们只能使用@Primary注解
+     * @param
      * @return
      */
     @Bean("redisTemplate")
-    public RedisTemplate<Object, Object> redisMasterTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate<Object, Object> redisMasterTemplate(RedisConnectionFactory masterFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        redisTemplate.setConnectionFactory(masterFactory);
 
         Jackson2JsonRedisSerializer <Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();

@@ -1,5 +1,6 @@
 package com.lujieni.separation;
 
+import com.lujieni.entity.Student;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,15 @@ public class RedisSeparationTest {
 
     @Test
     public void testMaster(){
-        redisTemplate.opsForValue().set("a","a");
+        Student student = new Student();
+        student.setName("张三");
+        student.setGender("男");
+        redisTemplate.opsForValue().set("student",student);
     }
 
     @Test
     public void testSlave(){
-        String value =(String) redisSlaveTemplate.opsForValue().get("a");
-        System.out.println(value);
+        Student student =(Student) redisSlaveTemplate.opsForValue().get("student");
+        System.out.println(student);
     }
 }
