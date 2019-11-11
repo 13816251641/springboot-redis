@@ -31,7 +31,7 @@ public class TestRedisLock {
     public void testGetReidsLock(){
         String lock="lock";
         String requestId="jiang";
-        Boolean result = RedisLockUtil.getRedisLock(redisTemplate, lock, requestId, 120);
+        boolean result = RedisLockUtil.getRedisLock(redisTemplate, lock, requestId, 120);
         System.out.println(result);
     }
 
@@ -43,7 +43,7 @@ public class TestRedisLock {
     public void testReleaseReidsLock(){
         String lock="lock";
         String requestId="jiang";
-        Long result = RedisLockUtil.releaseRedisLock(redisTemplate,drs,lock,requestId);
+        boolean result = RedisLockUtil.releaseRedisLock(redisTemplate,drs,lock,requestId);
         System.out.println(result);
     }
 

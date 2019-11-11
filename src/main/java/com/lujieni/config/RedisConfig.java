@@ -20,7 +20,9 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scripting.support.ResourceScriptSource;
 
-
+/**
+ * 位置redis多数据源(主从)
+ */
 @Configuration
 public class RedisConfig {
 
@@ -131,21 +133,6 @@ public class RedisConfig {
 
         return redisTemplate;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**

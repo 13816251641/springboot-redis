@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * redis全局锁实现
+ */
 public class RedisLockUtil {
+
+    private static final Long RELEASE_SUCCESS = 1L;
 
     /**
      * 尝试获取分布式锁
@@ -28,10 +33,15 @@ public class RedisLockUtil {
      * @param lockKey 锁
      * @param requestId 请求标识
      */
-    public static Long releaseRedisLock(RedisTemplate<Object, Object> redisTemplate, DefaultRedisScript<Long> drs, String lockKey, String requestId) {
+    public static boolean  releaseRedisLock(RedisTemplate<Object, Object> redisTemplate, DefaultRedisScript<Long> drs, String lockKey, String requestId) {
         List<Object> parameters = new ArrayList<>();//入参
         parameters.add(lockKey);
-        return redisTemplate.execute(drs, parameters, requestId);
+        Long result = redisTemplate.execute(drs, parameters, requestId);
+        if(RELEASE_SUCCESS.equals(result)){
+            return  true;
+        }else{
+            return false;
+        }
     }
 
 }
