@@ -1,5 +1,6 @@
 package com.lujieni.redislock;
 
+import com.lujieni.service.HelloService;
 import com.lujieni.util.RedisLockUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,9 +20,21 @@ public class TestRedisLock {
     @Autowired
     private RedisTemplate<Object,Object> redisTemplate;
 
-
     @Autowired
     private DefaultRedisScript<Long> drs;
+
+    @Autowired
+    private HelloService helloService;
+
+    /**
+     * 使用切面自动加载redis锁
+     */
+    @Test
+    public void testHello(){
+        String content = helloService.sayHelloMethod("hello");
+        System.out.println("hello");
+    }
+
 
     /**
      * 测试加锁代码
