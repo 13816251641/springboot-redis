@@ -29,6 +29,9 @@ public class RedisTransactionTest {
             开启事务支持,不设置为true的话会导致Lettuce连接超时,
             原因还不知道,但为false的话每次获取的都是新的连接肯
             定会有问题的!!!
+            这样写isActualNonReadonlyTransactionActive为false,不会
+            生成connection的代理对象也不会自动帮你multi,只会帮你将
+            连接绑定到当前线程上!!!
          */
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.multi();
