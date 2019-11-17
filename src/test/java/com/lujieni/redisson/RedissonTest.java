@@ -1,7 +1,7 @@
 /*
 package com.lujieni.redisson;
 
-import org.junit.Test;
+import org.junit.TestConvertPojo2Hash;
 import org.junit.runner.RunWith;
 import org.redisson.api.RBucket;
 import org.redisson.api.RLock;
@@ -17,7 +17,7 @@ public class RedissonTest {
     @Autowired
     private RedissonClient redissonClient;
 
-    @Test
+    @TestConvertPojo2Hash
     public void set() {
         RLock lock = redissonClient.getLock("anyLock");
         // 最常见的使用方法
