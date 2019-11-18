@@ -59,14 +59,17 @@ public class RedisTransactionTest {
     /**
      * 在事务中试图对字母进行附加,执行exce方法时直接抛
      * 运行时异常,但后面合法的命令仍然会执行,因此redis
-     * 的事物是不完全的
+     * 的事务是不完全的
      */
     @Test
     public void incompletableTransaction(){
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.multi();//开启事务
-        redisTemplate.opsForValue().increment("incr");//假如incr的值是"abc",对"abc"自增会报错
-        redisTemplate.opsForValue().set("name", "name"); //这条语句仍然会执行
+        /* 假如incr的值是"abc",对"abc"自增会报错 */
+        redisTemplate.opsForValue().increment("incr");
+        /* 这条语句仍然会执行,不会回滚 */
+        redisTemplate.opsForValue().set("name", "name");
+        /* 执行会抛异常 */
         List<Object> exec = redisTemplate.exec();
         System.out.println(exec);
     }
