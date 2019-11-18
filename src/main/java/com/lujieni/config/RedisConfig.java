@@ -134,7 +134,6 @@ public class RedisConfig {
         return redisTemplate;
     }
 
-
     /**
      * springboot调用redis脚本配置
      * @return
@@ -146,11 +145,4 @@ public class RedisConfig {
         redisScript.setResultType(Long.class);//返回值类型
         return redisScript;
     }
-
-
-
-
-
-
-
 }

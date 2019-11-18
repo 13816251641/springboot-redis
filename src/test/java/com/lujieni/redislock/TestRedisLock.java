@@ -60,11 +60,4 @@ public class TestRedisLock {
         System.out.println(result);
     }
 
-
-
-
-
-
-
-
 }
