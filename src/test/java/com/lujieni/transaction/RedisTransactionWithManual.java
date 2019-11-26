@@ -11,11 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 /**
- * 测试redis的事务能力
+ * 测试redis的手工控制事务
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RedisTransactionTest {
+public class RedisTransactionWithManual {
 
     @Autowired
     private RedisTemplate<Object,Object> redisTemplate;
@@ -58,7 +58,7 @@ public class RedisTransactionTest {
 
     /**
      * 在事务中试图对字母进行附加,执行exce方法时直接抛
-     * 运行时异常,但后面合法的命令仍然会执行,因此redis
+     * 运行时异常,但后面合法的命令仍然会执行!!!,因此redis
      * 的事务是不完全的
      */
     @Test
