@@ -43,4 +43,12 @@ public class TransactionService {
         redisTemplate.opsForValue().increment("d");
         redisTemplate.opsForValue().set("b", 5);
     }
+
+    public void test4() {
+        /*
+           程序抛运行时异常,因为没有使用事务,前面b的赋值操作不会回滚
+         */
+        redisTemplate.opsForValue().set("b", 5);
+        throw new RuntimeException();
+    }
 }

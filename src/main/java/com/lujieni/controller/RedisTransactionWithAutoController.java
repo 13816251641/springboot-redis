@@ -37,4 +37,10 @@ public class RedisTransactionWithAutoController {
         System.out.println("ok");
     }
 
+    @RequestMapping("/test4")
+    public void test4() {
+        transactionService.test4();
+        System.out.println("ok");
+    }
+
 }
