@@ -19,11 +19,16 @@ public class RedisTransactionWithAuto {
     @Autowired
     private RedisTemplate<Object,Object> redisTemplate;
 
+
+    /**
+     * 即使加了@Transactional标签,如果redisTemplate中的
+     * enableTransactionSupport为false,事务仍旧不生效
+     */
     @Test
     @Transactional
     public void hello(){
-        redisTemplate.opsForValue().set("a","b111111");
-        throw  new RuntimeException();
+        redisTemplate.opsForValue().set("av","b");
+        redisTemplate.opsForValue().increment("d");
     }
 
 

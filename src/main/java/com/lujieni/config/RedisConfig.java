@@ -104,7 +104,7 @@ public class RedisConfig {
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
-        redisTemplate.setEnableTransactionSupport(false);
+        redisTemplate.setEnableTransactionSupport(true);
 
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
