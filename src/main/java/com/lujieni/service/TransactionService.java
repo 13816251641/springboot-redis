@@ -18,7 +18,7 @@ public class TransactionService {
     @Transactional
     public void test1() {
         /*
-            程序代码出错,redis的set操作的确会回滚,
+            外部程序代码导致的出错,redis的set操作的确会回滚,
             a和b都不会被赋值
          */
         redisTemplate.opsForValue().set("a", 520);
@@ -29,7 +29,7 @@ public class TransactionService {
     @Transactional
     public void test2() {
         /*
-           incre操作redis会失败,但b的赋值操作成功
+           incre操作会失败,但b的赋值操作成功,不会回滚!!!
          */
         redisTemplate.opsForValue().increment("d");
         redisTemplate.opsForValue().set("b", 250);
@@ -58,10 +58,13 @@ public class TransactionService {
              @Transactional标签时,RedisConnectionUtils.releaseConnection(conn, factory)
              方法中的命令一条都不会执行,连接不会释放,这在springboot2.0之前会导致
              连接数耗尽,在2.0之后因为使用lettuce客户端得以复用链接而没事!!!
-
-           程序抛运行时异常,因为没有使用事务,前面b的赋值操作不会回滚,
+         */
+        /*
+            在enableTransactionSupport为true的状态下,
+            程序抛运行时异常,因为没有使用事务,
+            b的赋值操作不会回滚!!!
          */
         redisTemplate.opsForValue().set("b", 5);
-       /* throw new RuntimeException();*/
+        throw new RuntimeException();
     }
 }
