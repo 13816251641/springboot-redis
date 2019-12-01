@@ -49,9 +49,19 @@ public class TransactionService {
 
     public void test4() {
         /*
-           程序抛运行时异常,因为没有使用事务,前面b的赋值操作不会回滚
+           1.当enableTransactionSupport为false的时候,每次调用完
+             redis的命令后RedisConnectionUtils.releaseConnection(conn, factory)
+             方法中的!isConnectionTransactional(conn, factory)提交被触发,
+             conn.close();命令得到执行,将连接归还给连接池
+
+           2.当enableTransactionSupport为true且事务为手工事务不使用
+             @Transactional标签时,RedisConnectionUtils.releaseConnection(conn, factory)
+             方法中的命令一条都不会执行,连接不会释放,这在springboot2.0之前会导致
+             连接数耗尽,在2.0之后因为使用lettuce客户端得以复用链接而没事!!!
+
+           程序抛运行时异常,因为没有使用事务,前面b的赋值操作不会回滚,
          */
         redisTemplate.opsForValue().set("b", 5);
-        throw new RuntimeException();
+       /* throw new RuntimeException();*/
     }
 }
