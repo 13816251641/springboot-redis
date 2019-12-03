@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @Date 2019/11/27
  */
 @Service
-public class TransactionService {
+public class TransactionServiceWithAuto {
 
     @Autowired
     private RedisTemplate<Object,Object> redisTemplate;
