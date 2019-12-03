@@ -18,37 +18,28 @@ public class TransactionService {
     @Transactional
     public void test1() {
         /*
-            外部程序代码导致的出错,redis的set操作的确会回滚,
-            a和b都不会被赋值
+            外部程序代码导致的出错,因为加了@Transactional,
+            redis的set操作的确会回滚,a和b都不会被赋值
          */
-        redisTemplate.opsForValue().set("a", 520);
-        redisTemplate.opsForValue().set("b", 250);
+        /*
+            日志:
+            Invoke 'multi' on bound conneciton
+            Invoke 'set' on bound conneciton
+            Invoke 'set' on bound conneciton
+            Invoke 'discard' on bound conneciton
+            Invoke 'close' on bound conneciton
+         */
+        redisTemplate.opsForValue().set("a", 1);
+        redisTemplate.opsForValue().set("b", 2);
         throw new RuntimeException();
     }
 
-    @Transactional
     public void test2() {
         /*
-           incre操作会失败,但b的赋值操作成功,不会回滚!!!
-         */
-        redisTemplate.opsForValue().increment("d");
-        redisTemplate.opsForValue().set("b", 250);
-        /* 能直接得到值是因为给你开了一个新connection */
-        Integer b = (Integer)redisTemplate.opsForValue().get("b");
-        System.out.println(b);
-    }
+            外部程序代码导致的出错,没有加@Transactional
+            redis的set操作不会回滚,a和b都会被赋值
+            日志只会打印为:Opening RedisConnection
 
-    public void test3() {
-        /*
-           执行完increment语句后直接抛RedisCommandExecutionException异常,
-           因为抛了异常后程序就停止运行了,b的赋值操作不会执行。
-         */
-        redisTemplate.opsForValue().increment("d");
-        redisTemplate.opsForValue().set("b", 5);
-    }
-
-    public void test4() {
-        /*
            1.当enableTransactionSupport为false的时候,每次调用完
              redis的命令后RedisConnectionUtils.releaseConnection(conn, factory)
              方法中的!isConnectionTransactional(conn, factory)提交被触发,
@@ -57,14 +48,56 @@ public class TransactionService {
            2.当enableTransactionSupport为true且事务为手工事务不使用
              @Transactional标签时,RedisConnectionUtils.releaseConnection(conn, factory)
              方法中的命令一条都不会执行,连接不会释放,这在springboot2.0之前会导致
-             连接数耗尽,在2.0之后因为使用lettuce客户端得以复用链接而没事!!!
-         */
-        /*
-            在enableTransactionSupport为true的状态下,
-            程序抛运行时异常,因为没有使用事务,
-            b的赋值操作不会回滚!!!
-         */
-        redisTemplate.opsForValue().set("b", 5);
+             连接数耗尽,在2.0之后因为使用lettuce客户端得以复用连接而没事!!!
+
+           3.当enableTransactionSupport为true且事务为手工事务不使用
+             @Transactional标签时,连接会释放,是被RedisTransactionSynchronizer
+             类中的afterCompletion方法来释放
+        */
+        redisTemplate.opsForValue().set("a", 1);
+        redisTemplate.opsForValue().set("b", 2);
         throw new RuntimeException();
     }
+
+    @Transactional
+    public void test3() {
+        /*
+           在注解事务中incre操作会失败,
+           但b的赋值操作成功,不会回滚!!!
+         */
+        /*
+           日志
+           Opening RedisConnection
+           Invoke 'multi' on bound conneciton
+           Invoke 'incr' on bound conneciton
+           Invoke 'set' on bound conneciton
+           Invoke 'get' on unbound conneciton
+           Invoke 'exec' on bound conneciton
+           Invoke 'close' on bound conneciton
+         */
+        redisTemplate.opsForValue().increment("d");
+        redisTemplate.opsForValue().set("b", 250);
+        /* 能直接得到值是因为给你开了一个新connection */
+        Integer b = (Integer)redisTemplate.opsForValue().get("b");
+        System.out.println(b);
+    }
+
+    public void test4() {
+        /*
+           执行完increment语句后直接抛RedisCommandExecutionException异常,
+           因为抛了异常后程序就停止运行了,b的赋值操作不会执行。
+
+           当enableTransactionSupport为true且事务为手工事务不使用
+           @Transactional标签时,RedisConnectionUtils.releaseConnection(conn, factory)
+           方法中的命令一条都不会执行,连接不会释放,这在springboot2.0之前会导致
+           连接数耗尽,在2.0之后因为使用lettuce客户端得以复用链接而没事!!!
+         */
+
+        /*
+           日志:Opening RedisConnection
+         */
+        redisTemplate.opsForValue().increment("d");
+        redisTemplate.opsForValue().set("b", 5);
+    }
+
 }

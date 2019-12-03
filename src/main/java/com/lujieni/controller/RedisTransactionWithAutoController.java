@@ -41,5 +41,4 @@ public class RedisTransactionWithAutoController {
         transactionService.test4();
         System.out.println("ok");
     }
-
 }
