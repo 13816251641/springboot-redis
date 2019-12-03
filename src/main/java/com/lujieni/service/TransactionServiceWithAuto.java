@@ -39,7 +39,9 @@ public class TransactionServiceWithAuto {
             外部程序代码导致的出错,没有加@Transactional
             redis的set操作不会回滚,a和b都会被赋值
             日志只会打印为:Opening RedisConnection
+         */
 
+        /*
            1.当enableTransactionSupport为false的时候,每次调用完
              redis的命令后RedisConnectionUtils.releaseConnection(conn, factory)
              方法中的!isConnectionTransactional(conn, factory)提交被触发,
@@ -50,10 +52,10 @@ public class TransactionServiceWithAuto {
              方法中的命令一条都不会执行,连接不会释放,这在springboot2.0之前会导致
              连接数耗尽,在2.0之后因为使用lettuce客户端得以复用连接而没事!!!
 
-           3.当enableTransactionSupport为true且事务为手工事务不使用
+           3.当enableTransactionSupport为true且事务使用注解事务,即方法上添加
              @Transactional标签时,连接会释放,是被RedisTransactionSynchronizer
              类中的afterCompletion方法来释放
-        */
+         */
         redisTemplate.opsForValue().set("a", 1);
         redisTemplate.opsForValue().set("b", 2);
         throw new RuntimeException();
