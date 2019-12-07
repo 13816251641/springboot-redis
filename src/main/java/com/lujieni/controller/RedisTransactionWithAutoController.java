@@ -1,6 +1,6 @@
 package com.lujieni.controller;
 
-import com.lujieni.service.TransactionServiceWithAuto;
+import com.lujieni.service.impl.TransactionServiceWithAuto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,29 +17,37 @@ public class RedisTransactionWithAutoController {
     private RedisTemplate<Object,Object> redisTemplate;
 
     @Autowired
-    private TransactionServiceWithAuto transactionService;
+    private TransactionServiceWithAuto transactionServiceWithAuto;
 
     @RequestMapping("/test1")
     public void test1() {
-        transactionService.test1();
+        transactionServiceWithAuto.test1();
         System.out.println("ok");
     }
 
     @RequestMapping("/test2")
     public void test2() {
-        transactionService.test2();
+        transactionServiceWithAuto.test2();
         System.out.println("ok");
     }
 
     @RequestMapping("/test3")
     public void test3() {
-        transactionService.test3();
+        /*
+           使用@Transactional的话如果是由于redis内部命令失败的话
+           try catch无法捕获到异常,ok仍旧会打印
+         */
+        try {
+            transactionServiceWithAuto.test3();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("ok");
     }
 
     @RequestMapping("/test4")
     public void test4() {
-        transactionService.test4();
+        transactionServiceWithAuto.test4();
         System.out.println("ok");
     }
 }

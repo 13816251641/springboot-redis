@@ -1,7 +1,7 @@
 package com.lujieni.controller;
 
-import com.lujieni.service.TransactionServiceWithAuto;
-import com.lujieni.service.TransactionServiceWithManual;
+
+import com.lujieni.service.impl.TransactionServiceWithManual;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,29 +18,29 @@ public class RedisTransactionWithManualController {
     private RedisTemplate<Object,Object> redisTemplate;
 
     @Autowired
-    private TransactionServiceWithManual transactionService;
+    private TransactionServiceWithManual transactionServiceWithManual;
 
     @RequestMapping("/test1")
     public void test1() {
-        transactionService.jiBenShiWu();
+        transactionServiceWithManual.jiBenShiWu();
         System.out.println("ok");
     }
 
     @RequestMapping("/test2")
     public void test2() {
-        transactionService.shiWuReturnNull();
+        transactionServiceWithManual.shiWuReturnNull();
         System.out.println("ok");
     }
 
     @RequestMapping("/test3")
     public void test3() {
-        transactionService.incompletableTransaction();
+        transactionServiceWithManual.incompletableTransaction();
         System.out.println("ok");
     }
 
     @RequestMapping("/test4")
     public void test4() {
-        transactionService.useWatch();
+        transactionServiceWithManual.useWatch();
         System.out.println("ok");
     }
 }

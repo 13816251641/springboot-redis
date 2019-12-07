@@ -1,4 +1,4 @@
-package com.lujieni.service;
+package com.lujieni.service.impl;
 
 import com.lujieni.annotation.RedisLock;
 import org.springframework.stereotype.Service;

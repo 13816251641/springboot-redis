@@ -1,6 +1,6 @@
 package com.lujieni.controller;
 
-import com.lujieni.service.TransactionServiceWithMyOwn;
+import com.lujieni.service.impl.TransactionServiceWithMyOwn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @Auther ljn
  * @Date 2019/12/4
- *
- *
  */
 @RestController
 @RequestMapping("/own")

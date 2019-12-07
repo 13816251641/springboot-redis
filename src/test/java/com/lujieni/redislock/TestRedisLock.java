@@ -1,6 +1,6 @@
 package com.lujieni.redislock;
 
-import com.lujieni.service.HelloService;
+import com.lujieni.service.impl.HelloService;
 import com.lujieni.util.RedisLockUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
