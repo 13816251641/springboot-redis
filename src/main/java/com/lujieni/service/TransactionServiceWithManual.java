@@ -22,7 +22,7 @@ public class TransactionServiceWithManual {
     public void jiBenShiWu(){
         /*
             开启事务支持,EnableTransactionSupport不设置为true的
-            话会导致Lettuce连接超时,原因还不知道,但为false的话
+            话会导致lettuce连接超时,原因还不知道,但为false的话
             每次获取的都是新的连接事务肯定没有办法完成!!!
             这样写isActualNonReadonlyTransactionActive为false,不会
             生成connection的代理对象也不会自动帮你multi,只会帮你将
@@ -44,8 +44,7 @@ public class TransactionServiceWithManual {
     }
 
     /**
-     * 事务中任何get操作都会返回null,因为事务不是即时的,
-     * 返回值都在exec中
+     * 手工事务中任何get操作都会返回null,因为事务不是即时的返回值都在exec中
      */
     public void shiWuReturnNull(){
         redisTemplate.multi();//开启事务
@@ -60,8 +59,8 @@ public class TransactionServiceWithManual {
 
     /**
      * 在事务中试图对字母进行附加,执行exce方法时直接抛
-     * 运行时异常,但后面合法的命令仍然会执行!!!,因此redis
-     * 的事务是不完全的
+     * 运行时异常,但后面合法的命令仍然会执行!!!,因此
+     * redis的事务是不完全的
      */
     public void incompletableTransaction(){
         redisTemplate.multi();//开启事务
@@ -69,8 +68,9 @@ public class TransactionServiceWithManual {
         redisTemplate.opsForValue().increment("c");
         /* 这条语句仍然会执行,不会回滚 */
         redisTemplate.opsForValue().set("name", "name");
-        /* 执行会抛异常 */
+        /* 下面命令执行会抛运行时异常 */
         List<Object> exec = redisTemplate.exec();
+        /* exec不会打印,因为异常了 */
         System.out.println(exec);
     }
 
