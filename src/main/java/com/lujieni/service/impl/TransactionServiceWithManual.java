@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 测试redis的手工控制事务
+ * 测试redis的手工控制事务,即不使用@Transaction的事务
  */
 @Service
 public class TransactionServiceWithManual {
@@ -44,7 +44,8 @@ public class TransactionServiceWithManual {
     }
 
     /**
-     * 手工事务中任何get操作都会返回null,因为事务不是即时的返回值都在exec中
+     * 手工事务中任何get操作都会返回null,
+     * 因为事务不是即时的返回值都在exec中
      */
     public void shiWuReturnNull(){
         redisTemplate.multi();//开启事务

@@ -93,8 +93,8 @@ public class TransactionServiceWithAuto {
         /*
            日志:Opening RedisConnection
          */
-        redisTemplate.opsForValue().increment("d");
-        redisTemplate.opsForValue().set("b", 5);
+        redisTemplate.opsForValue().increment("d");//假如它失败
+        redisTemplate.opsForValue().set("b", 5);//b的赋值不会执行
     }
 
 }

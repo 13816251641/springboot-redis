@@ -2,7 +2,6 @@ package com.lujieni.controller;
 
 import com.lujieni.service.impl.TransactionServiceWithAuto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auto")
 public class RedisTransactionWithAutoController {
-    @Autowired
-    private RedisTemplate<Object,Object> redisTemplate;
 
     @Autowired
     private TransactionServiceWithAuto transactionServiceWithAuto;
