@@ -38,7 +38,7 @@ public class RedisConfig {
     }
 
     /**
-     * 配置第一个数据源的参数
+     * 配置第一个数据源的连接配置
      *
      * @return
      */
@@ -49,7 +49,7 @@ public class RedisConfig {
     }
 
     /**
-     * 配置第二个数据源
+     * 配置第二个数据源的连接配置
      *
      * @return
      */
@@ -59,6 +59,13 @@ public class RedisConfig {
         return new RedisStandaloneConfiguration();
     }
 
+
+    /**
+     *
+     * @param config  连接池配置
+     * @param redisMasterConfig  连接配置
+     * @return
+     */
     @Bean
     @Primary
     public LettuceConnectionFactory masterFactory(GenericObjectPoolConfig config, RedisStandaloneConfiguration redisMasterConfig) {
