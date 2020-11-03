@@ -96,7 +96,7 @@ public class RedisConfig {
      *
      * 原本使用入参名来区别同一个类的不同实例是可行的,
      * 但是在redisAutoConfiguration中还配置了stringRedisTemplate,
-     * 它没有按照入参名来区分,所以我们只能使用@Primary注解
+     * 它没有按照入参名来区分,所以我们只能使用@Primary注解LettuceConnectionFactory
      * @param
      * @return
      */
